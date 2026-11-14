@@ -1,0 +1,92 @@
+# Deploys a published release of QW Portfolio to https://ppm.quietwander.com.
+#
+# Runs when a release is published on GitHub (or by hand, to deploy an earlier tag again).
+# 1. Checks out the release tag.
+# 2. Checks the four app files against that version's SHA256SUMS block in RELEASES.md,
+#    and that the app's version number and offline cache name match the tag.
+# 3. Deploys only those four files to Cloudflare Pages (project "ppm", production).
+# 4. Downloads the files back from the live site and checks they are byte for byte the same.
+# Any mismatch stops the run and marks it failed.
+
+name: Deploy release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to deploy again, for example v1.3.1 (to roll back)"
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+env:
+  TAG: ${{ github.event.release.tag_name || inputs.tag }}
+  SITE: https://ppm.quietwander.com
+  FILES: index.html sw.js manifest.webmanifest icon.svg
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the release
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Check the files against RELEASES.md
+        run: |
+          set -euo pipefail
+          V="${TAG#v}"
+          # This version's section of RELEASES.md: from "## vX.Y.Z " to the next "## " heading
+          awk -v h="## ${TAG} " 'index($0,h)==1{f=1;next} /^## /{f=0} f' RELEASES.md > section.md
+          grep -E '^[0-9a-f]{64}  [A-Za-z0-9._-]+$' section.md > SHA256SUMS || true
+          for f in $FILES; do
+            grep -q "  $f\$" SHA256SUMS || { echo "::error::RELEASES.md has no SHA-256 line for $f under ${TAG}"; exit 1; }
+          done
+          [ "$(wc -l < SHA256SUMS)" -eq 4 ] || { echo "::error::Expected 4 SHA-256 lines under ${TAG} in RELEASES.md"; exit 1; }
+          sha256sum -c SHA256SUMS || { echo "::error::The files in ${TAG} do not match RELEASES.md"; exit 1; }
+          grep -q "APPV='${V}'" index.html || { echo "::error::index.html is not version ${V} (APPV)"; exit 1; }
+          grep -q "C='ppm-v${V}'" sw.js || { echo "::error::sw.js cache name is not ppm-v${V}"; exit 1; }
+          mkdir dist
+          for f in $FILES; do cp "$f" dist/; done
+          ls -l dist
+
+      - name: Deploy to Cloudflare Pages (production)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=ppm --branch=main --commit-message="${{ env.TAG }}"
+
+      - name: Check the live site
+        run: |
+          set -euo pipefail
+          for try in $(seq 1 12); do
+            bad=""
+            for f in $FILES; do
+              curl -fsSL "$SITE/$f" -o "live-$f" || { bad="$bad $f"; continue; }
+              cmp -s "live-$f" "dist/$f" || bad="$bad $f"
+            done
+            [ -z "$bad" ] && break
+            echo "Not matching yet:$bad (try $try of 12)"; sleep 15
+          done
+          {
+            echo "## ${TAG} on ${SITE}"
+            echo ""
+            echo "| File | SHA-256 in the release | SHA-256 served live |"
+            echo "|---|---|---|"
+            for f in $FILES; do
+              echo "| \`$f\` | \`$(sha256sum "dist/$f" | cut -d' ' -f1)\` | \`$( [ -f "live-$f" ] && sha256sum "live-$f" | cut -d' ' -f1 || echo none)\` |"
+            done
+            echo ""
+            if [ -z "$bad" ]; then echo "The live site serves exactly the files of ${TAG}."; else echo "**The live site does not match:**$bad"; fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          [ -z "$bad" ] || { echo "::error::Live site does not match ${TAG}:$bad"; exit 1; }
+          echo "Live site matches ${TAG}."
