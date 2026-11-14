@@ -25,6 +25,8 @@ The published release files, exactly as served:
 
 Each release is a git tag (`v1.3.1`, …). `RELEASES.md` lists every release with the SHA-256 fingerprint of each file.
 
+Publishing a release here is what puts it live: the workflow in `.github/workflows/deploy.yml` checks the release's files against `RELEASES.md`, deploys exactly those four files to ppm.quietwander.com, then downloads them back from the live site and checks they match. Each run and its fingerprint table are public under the repository's **Actions** tab.
+
 ## Verify the app you are running
 
 You can check that the app at ppm.quietwander.com is exactly the code published here.
