@@ -4,6 +4,30 @@ Every published release of QW Portfolio, newest first, with the SHA-256 fingerpr
 
 "Published" is the date the release was added to this repository under the licence (`LICENSE`); the release also becomes available under the MIT licence on "MIT from".
 
+## v1.4 · Cloud sync
+
+- **In the app since:** 2026-11-20
+- **Published:** 2026-11-20 (tag `v1.4`)
+- **MIT from:** 2028-11-20
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `index.html` | 359,251 | `3eece37875d438a0f6f775ba0c8e3706ad871444f7dd746a3caa77127a334bf3` |
+| `sw.js` | 730 | `009801a417d87ce098144ce5a0fd9fd17f713025958a2bb1fd57239e82c452d4` |
+| `manifest.webmanifest` | 672 | `0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76` |
+| `icon.svg` | 8,071 | `5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f` |
+
+What's new: Cloud sync: the same data on your phone and computer through your own Google Drive, Dropbox or OneDrive. Your data is encrypted on the device before it is uploaded; changes sync by themselves; when your data was changed on another device the app asks which copy to keep, and the copy you don't choose is kept as a dated file. One password and one recovery code for all your devices. Restore from your cloud. Lock the app when you leave it. A show/hide button on password and code boxes. Questions and messages now appear in the app's own dialogs.
+
+For `sha256sum -c` (Linux) or `shasum -a 256 -c` (Mac), save these lines as `SHA256SUMS` next to the files:
+
+```
+3eece37875d438a0f6f775ba0c8e3706ad871444f7dd746a3caa77127a334bf3  index.html
+009801a417d87ce098144ce5a0fd9fd17f713025958a2bb1fd57239e82c452d4  sw.js
+0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76  manifest.webmanifest
+5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f  icon.svg
+```
+
 ## v1.3.2 · Terms of use
 
 - **In the app since:** 2026-11-13

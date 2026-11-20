@@ -6,8 +6,9 @@ A private investment tracker for DIY investors. You enter the shares you hold; t
 
 ## Privacy
 
-- **Your data stays on your device.** There is no QW Portfolio server and no account. Everything is saved in your browser's storage on the device you use.
-- **Optional password.** With a password on, your data is encrypted with AES-256 using a key made from that password. The password never leaves the device and there is no reset: keep a backup.
+- **Your data stays with you.** There is no QW Portfolio server and no QW Portfolio account. Everything is saved in your browser's storage on the device you use.
+- **Cloud sync is optional.** To have the same data on your phone and computer, you can connect your own Google Drive, Dropbox or OneDrive. Your data is encrypted on your device before it is uploaded, and the app can open only its own folder there. The copy opens only with your password or your recovery code, which are never sent anywhere.
+- **Optional password.** With a password on, your data is encrypted with AES-256 using a key made from that password. The password is never stored or sent anywhere. With Cloud sync, your recovery code opens your data if you forget the password; without Cloud sync there is no reset, so keep a backup.
 - **Backups are files you keep.** Export one any time; backups made while a password is on are encrypted too.
 - **Live prices are optional.** If you add your own key for Finnhub, Twelve Data or Alpha Vantage, your browser asks that provider for prices directly, sending the ticker symbols and your key. No amounts, account names or holdings are sent anywhere.
 - **No ads, no tracking code in the app.**
