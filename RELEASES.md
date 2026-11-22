@@ -4,6 +4,30 @@ Every published release of QW Portfolio, newest first, with the SHA-256 fingerpr
 
 "Published" is the date the release was added to this repository under the licence (`LICENSE`); the release also becomes available under the MIT licence on "MIT from".
 
+## v1.4.1 · Cloud sync fixes
+
+- **In the app since:** 2026-11-22
+- **Published:** 2026-11-22 (tag `v1.4.1`)
+- **MIT from:** 2028-11-22
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `index.html` | 366,810 | `b3454e4f4953ec94e32d2a1dc4dd96d493065452dbc4e091dd4d213695205288` |
+| `sw.js` | 732 | `ec6a16ac34aff83896b999e2e101dba2c677d3f2f663bb8f40535d4e4c11167a` |
+| `manifest.webmanifest` | 672 | `0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76` |
+| `icon.svg` | 8,071 | `5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f` |
+
+What's new: Cloud sync fixes. When two devices change your data at about the same time, when a device that has never synced uses the cloud copy, or when a copy was started over in the cloud, nothing is lost: the other copy, or this device's own data, is kept as a dated file. Dropbox and OneDrive now refuse to overwrite a copy that changed since it was read, and Google Drive keeps a single main file. A cloud file this version can't read, or one made by a newer version, is never replaced without keeping it. When both devices have changes, one box asks which copy to use. Open QW Portfolio once on each of your devices, so they all have this update.
+
+For `sha256sum -c` (Linux) or `shasum -a 256 -c` (Mac), save these lines as `SHA256SUMS` next to the files:
+
+```
+b3454e4f4953ec94e32d2a1dc4dd96d493065452dbc4e091dd4d213695205288  index.html
+ec6a16ac34aff83896b999e2e101dba2c677d3f2f663bb8f40535d4e4c11167a  sw.js
+0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76  manifest.webmanifest
+5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f  icon.svg
+```
+
 ## v1.4 · Cloud sync
 
 - **In the app since:** 2026-11-20
