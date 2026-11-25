@@ -4,6 +4,30 @@ Every published release of QW Portfolio, newest first, with the SHA-256 fingerpr
 
 "Published" is the date the release was added to this repository under the licence (`LICENSE`); the release also becomes available under the MIT licence on "MIT from".
 
+## v1.4.2 · New recovery code replaces the key
+
+- **In the app since:** 2026-11-25
+- **Published:** 2026-11-25 (tag `v1.4.2`)
+- **MIT from:** 2028-11-25
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `index.html` | 387,165 | `4a7f0d7840d48d1b0afd268c5fc54195fc53731f035b92138636ab0dc57922a7` |
+| `sw.js` | 732 | `41db9e0014f86a719281c628a886dd8cf6c9085edba3bce5fb07df78b810060a` |
+| `manifest.webmanifest` | 672 | `0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76` |
+| `icon.svg` | 8,071 | `5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f` |
+
+What's new: A new recovery code now also changes the encryption key, so the old code no longer opens your newer copies (older dated copies and exported backups still open with the code they were saved with). Changing or removing your password now asks for your current password, or your recovery code. The Cloud sync card says when the file in your cloud can't be read, and its "Review changes" button opens the box that asks which copy to use. Fewer boxes when syncing: one box when another device made a new recovery code, and none when you reconnect to this device's own last copy. Open QW Portfolio once on each of your devices, so they all have this update.
+
+For `sha256sum -c` (Linux) or `shasum -a 256 -c` (Mac), save these lines as `SHA256SUMS` next to the files:
+
+```
+4a7f0d7840d48d1b0afd268c5fc54195fc53731f035b92138636ab0dc57922a7  index.html
+41db9e0014f86a719281c628a886dd8cf6c9085edba3bce5fb07df78b810060a  sw.js
+0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76  manifest.webmanifest
+5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f  icon.svg
+```
+
 ## v1.4.1 · Cloud sync fixes
 
 - **In the app since:** 2026-11-22
