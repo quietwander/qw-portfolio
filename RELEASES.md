@@ -4,6 +4,30 @@ Every published release of QW Portfolio, newest first, with the SHA-256 fingerpr
 
 "Published" is the date the release was added to this repository under the licence (`LICENSE`); the release also becomes available under the MIT licence on "MIT from".
 
+## v1.4.3 · Passkey unlock
+
+- **In the app since:** 2026-11-26
+- **Published:** 2026-11-26 (tag `v1.4.3`)
+- **MIT from:** 2028-11-26
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `index.html` | 417,415 | `f00ec9b49017848cdb9aee1f7ae52878121a493cbaa4cb441be27404b2df5dae` |
+| `sw.js` | 732 | `e6ca37bb9605f53b71f9166d6aa38fe5662f97d49594814afdfd9f2efcad60e5` |
+| `manifest.webmanifest` | 672 | `0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76` |
+| `icon.svg` | 8,071 | `5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f` |
+
+What's new: Unlock with a passkey instead of typing your password: turn it on in Setup, Password protection (your password and recovery code still work as well). A Lock button at the top locks the app at once. Welcome back: an optional screen when the app opens, with your total, what changed since you last opened, and shortcuts (Setup, Appearance). Erase data on this device now starts over completely on this device: it removes your portfolio, your password and passkey unlock, and the copy in your cloud is not affected. Importing a backup that has a password keeps that password. Sync automatically remembers when you turn it off.
+
+For `sha256sum -c` (Linux) or `shasum -a 256 -c` (Mac), save these lines as `SHA256SUMS` next to the files:
+
+```
+f00ec9b49017848cdb9aee1f7ae52878121a493cbaa4cb441be27404b2df5dae  index.html
+e6ca37bb9605f53b71f9166d6aa38fe5662f97d49594814afdfd9f2efcad60e5  sw.js
+0d12f48762c52a7007a8bfa241bedced5f020f8406548c2fbea5f94bb29f5a76  manifest.webmanifest
+5f6d0989b2c18cca22efcc8dac935a94b07d1d7c2b2891eafb0040b38e10085f  icon.svg
+```
+
 ## v1.4.2 · New recovery code replaces the key
 
 - **In the app since:** 2026-11-25
